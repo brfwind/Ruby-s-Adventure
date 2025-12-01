@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5668138415030623614}
   m_Layer: 0
   m_Name: Ruby
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  maxHealth: 5
+  timeInvincible: 2
 --- !u!50 &292417896637896095
 Rigidbody2D:
   serializedVersion: 4
@@ -124,8 +126,8 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &5668138415030623614
 BoxCollider2D:
