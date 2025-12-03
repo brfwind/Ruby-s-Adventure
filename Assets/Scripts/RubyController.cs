@@ -52,6 +52,22 @@ public class RubyController : MonoBehaviour
         {
             Launch();
         }
+
+        //检测是否与NPC对话
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(rb.position+Vector2.up*0.2f,lookDirection,1.5f,LayerMask.GetMask("npc"));
+
+            if(hit.collider != null)
+            {
+                NPCDialog npcDialog = hit.collider.GetComponent<NPCDialog>();
+
+                if(npcDialog != null)
+                {
+                    npcDialog.DisplayDialog();
+                }
+            }
+        }
     }
 
     void FixedUpdate()
@@ -96,6 +112,8 @@ public class RubyController : MonoBehaviour
 
         //ps：以上的代码除非因为在无敌时间而进入return，下面的代码还是会正常执行
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+
+        UIHealthBar.instance.SetValue(currentHealth/(float)maxHealth);
     }
 
     //发射子弹
