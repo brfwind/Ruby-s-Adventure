@@ -82,6 +82,11 @@ public class RubyController : MonoBehaviour
         {
             lookDirection.Set(move.x, move.y);
             lookDirection.Normalize();
+            AudioManager.PlayAudio("Footsteps",true);
+        }
+        else
+        {
+            AudioManager.StopAudio("Footsteps");
         }
 
         animator.SetFloat("Look X", lookDirection.x);
@@ -108,6 +113,8 @@ public class RubyController : MonoBehaviour
             //如果无敌状态过期了，且收到了伤害
             isInvincible = true;
             invincibleTimer = timeInvincible;
+            animator.SetTrigger("Hit");
+            AudioManager.PlayAudio("Player Hit",true);
         }
 
         //ps：以上的代码除非因为在无敌时间而进入return，下面的代码还是会正常执行
@@ -119,8 +126,14 @@ public class RubyController : MonoBehaviour
     //发射子弹
     private void Launch()
     {
+        //如果此时还不能攻击
+        if(!UIHealthBar.instance.hasTask)
+        {
+            return;
+        }
+
         //生成一个子弹预制体
-        GameObject projectileObject = Instantiate(projectilePrefab, rb.position, Quaternion.identity);
+        GameObject projectileObject = Instantiate(projectilePrefab, rb.position+Vector2.up * 0.5f, Quaternion.identity);
         //获得该预制体上的脚本
         Projectile projectile = projectileObject.GetComponent<Projectile>();
 
@@ -142,5 +155,7 @@ public class RubyController : MonoBehaviour
         projectile.Launch(pushDir, 300);
         //设置动画条件
         animator.SetTrigger("Launch");
+
+        AudioManager.PlayAudio("ThrowTile",false);
     }
 }

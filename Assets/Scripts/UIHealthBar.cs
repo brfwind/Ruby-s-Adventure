@@ -9,6 +9,8 @@ public class UIHealthBar : MonoBehaviour
     private float originalSize;
 
     public static UIHealthBar instance {get; private set;}
+    public bool hasTask;
+    public int fixedNum;
 
     void Awake()
     {
