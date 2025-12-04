@@ -25,12 +25,27 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        EnemyController enemyController = other.gameObject.GetComponent<EnemyController>();
+        EnemyController enemyController = other.gameObject.GetComponentInParent<EnemyController>();
+        
         if(enemyController != null)
         {
             enemyController.Fix();
+            Debug.Log("修复");
+        }
+
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        EnemyController enemyController = other.gameObject.GetComponent<EnemyController>();
+        
+        if(enemyController != null)
+        {
+            enemyController.Fix();
+            Debug.Log("修复");
         }
 
         Destroy(gameObject);

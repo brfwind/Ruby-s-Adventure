@@ -24,13 +24,20 @@ public class RubyController : MonoBehaviour
 
     public GameObject projectilePrefab;
 
+    [Header("射击间隔")]
+    public float shootTime = 0.3f;
+    private bool canShoot;
+    private float shootTimer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
         invincibleTimer = timeInvincible;
+        shootTimer = shootTime;
         isInvincible = true;
+        canShoot = true;
     }
 
     void Update()
@@ -43,6 +50,17 @@ public class RubyController : MonoBehaviour
             if (invincibleTimer <= 0)
             {
                 isInvincible = false;
+            }
+        }
+
+        //射击间隔计时器
+        if(!canShoot)
+        {
+            shootTimer -= Time.deltaTime;
+
+            if(shootTimer <= 0)
+            {
+                canShoot = true;
             }
         }
 
@@ -127,7 +145,7 @@ public class RubyController : MonoBehaviour
     private void Launch()
     {
         //如果此时还不能攻击
-        if(!UIHealthBar.instance.hasTask)
+        if(!UIHealthBar.instance.hasTask || !canShoot)
         {
             return;
         }
@@ -157,5 +175,8 @@ public class RubyController : MonoBehaviour
         animator.SetTrigger("Launch");
 
         AudioManager.PlayAudio("ThrowTile",false);
+
+        canShoot = false;
+        shootTimer = shootTime;
     }
 }

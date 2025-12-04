@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
         smokeEffect = GetComponentInChildren<ParticleSystem>();
 
         walkAudio = GetComponent<AudioSource>();
-        walkAudio.volume = 0.2f;
+        walkAudio.volume = 0.1f;
         walkAudio.Play();
 
         timer = changeTime;
